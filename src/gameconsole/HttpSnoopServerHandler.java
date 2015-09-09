@@ -21,7 +21,11 @@ import static io.netty.handler.codec.http.HttpResponseStatus.*;
 import static io.netty.handler.codec.http.HttpVersion.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.TimeZone;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -34,6 +38,15 @@ public class HttpSnoopServerHandler extends SimpleChannelInboundHandler<Object> 
     private final Map<String, String> headers = new LinkedHashMap<>();
     private byte[] buf = new byte[0];
     private final AtomicReference<HttpResponseStatus> status = new AtomicReference<>(HttpResponseStatus.OK);
+    private static final ThreadLocal<SimpleDateFormat> HTTP_TIME_FORMATTER = new ThreadLocal<SimpleDateFormat>() {
+
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat(
+                    "EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+        }
+
+    };
 
     HttpSnoopServerHandler(GameConsole console) {
         this.console = console;
@@ -65,17 +78,26 @@ public class HttpSnoopServerHandler extends SimpleChannelInboundHandler<Object> 
             }
             headers.clear();
             if (request.getMethod() == HttpMethod.OPTIONS) {
-                if (request.getUri().equals("/service") || request.getUri().equals("/service?service=config")) {
+                if (request.getUri().equals("/service")
+                        || request.getUri().equals("/service?service=config")
+                        || request.getUri().equals("/service?service=password")) {
                     status.set(NO_CONTENT);
                     headers.put("Allow", "GET,POST,OPTIONS,HEAD");
-                    headers.put("cache-control", "max-age=120");
+                    headers.put("cache-control", "max-age=120000");
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.add(Calendar.DAY_OF_MONTH, 7);
+                    SimpleDateFormat dateFormat = HTTP_TIME_FORMATTER.get();
+                    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+                    headers.put("Expires",dateFormat.format(calendar.getTime())); // 1 week in future.
                     this.buf = new byte[0];
                 } else {
                     status.set(NOT_FOUND);
                 }
 
             } else {
-                if (request.getUri().equals("/service") || request.getUri().equals("/service?service=config")) {
+                if (request.getUri().equals("/service")
+                        || request.getUri().equals("/service?service=config")
+                        || request.getUri().equals("/service?service=password")) {
                     ByteArrayOutputStream out = new ByteArrayOutputStream();
                     try {
                         this.console.handleRequest(out, request.headers(), headers, status, request.getUri(), cont, ctx);
