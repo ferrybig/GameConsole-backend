@@ -10,7 +10,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
+import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +30,7 @@ public class Server {
     private int writeIndex;
     private long totalBytes;
     private BufferedWriter out;
+    public final Map<Setting, String> settings = new HashMap<>();
 
     private static final byte[] DEFAULT_BYTES;
     static {

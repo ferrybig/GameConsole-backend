@@ -55,7 +55,12 @@ public class GameConsole {
     private Map<String, Server> servers = new HashMap<>();
 
     {
-        servers.put("test", new Server(new File("server"), Arrays.asList("java", "-jar", "spigot-1.8.jar"), 1024 * 64));
+        Server s;
+        servers.put("test", s = new Server(new File("server"), Arrays.asList("java", "-jar", "spigot-1.8.jar"), 1024 * 64));
+        s.settings.put(new Setting("port", Setting.Type.PORT, 1, true), "25565");
+        s.settings.put(new Setting("ip", Setting.Type.IP, 1, true), "192.168.178.89");
+        s.settings.put(new Setting("server-name", Setting.Type.NORMAL_STRING, 1, false), "Unknown server");
+        s.settings.put(new Setting("moth", Setting.Type.NORMAL_STRING, 1, true), "Minecraft-server");
     }
 
     public void handleRequest(
@@ -160,6 +165,27 @@ public class GameConsole {
                             obj.put("server-id", server);
                             obj.put("readIndex", s.getCurrentWriteIndex());
                             obj.put("bufSize", s.getBufferSize());
+                            b.append(obj.toString());
+                        }
+                    }
+                    break;
+                    case "settings": {
+                        synchronized (s) {
+                            JSONObject obj = new JSONObject();
+                            obj.put("state", s.isRunning() ? "started" : "stopped");
+                            obj.put("server-id", server);
+                            obj.put("readIndex", s.getCurrentWriteIndex());
+                            obj.put("bufSize", s.getBufferSize());
+                            JSONArray arr = new JSONArray();
+                            for(Map.Entry<Setting, String> se : s.settings.entrySet()) {
+                                JSONObject obj1 = new JSONObject();
+                                obj1.put("name", se.getKey().getName());
+                                obj1.put("readonly", se.getKey().isReadonly());
+                                obj1.put("type", se.getKey().getType());
+                                obj1.put("description", se.getKey().getName());
+                                arr.put(obj1);
+                            }
+                            obj.put("settings", arr);
                             b.append(obj.toString());
                         }
                     }
@@ -290,6 +316,8 @@ public class GameConsole {
                                 obj1.put("server-id", serverName.getKey());
                                 obj1.put("readIndex", server.getCurrentWriteIndex());
                                 obj1.put("bufSize", server.getBufferSize());
+                                obj1.put("exitCode", 0);
+                                obj1.put("smalldescription", serverName.getKey());
                             }
                             obj.put(serverName.getKey(), obj1);
                         }
@@ -346,7 +374,6 @@ public class GameConsole {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {
                 interrupted = true;
-                
             }
         } while (attempt++ < 10 && runningServers > 0);
         for (Server server : this.servers.values()) {
