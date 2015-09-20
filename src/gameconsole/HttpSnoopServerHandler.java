@@ -60,7 +60,7 @@ public class HttpSnoopServerHandler extends SimpleChannelInboundHandler<Object> 
     @Override
     protected void messageReceived(ChannelHandlerContext ctx, Object msg) {
         if (msg instanceof HttpRequest) {
-            HttpRequest request = this.request = (HttpRequest) msg;
+            this.request = (HttpRequest) msg;
 
             if (HttpHeaders.is100ContinueExpected(request)) {
                 send100Continue(ctx);
