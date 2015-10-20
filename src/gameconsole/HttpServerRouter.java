@@ -22,6 +22,8 @@ public interface HttpServerRouter {
 	
 	public void removeRoute(Route route);
 	
+	public HttpResponse proccessRequest(String route, HttpHeaders headers, byte[] data);
+	
 	public interface Route {
 		public String getRouteName();
 		
