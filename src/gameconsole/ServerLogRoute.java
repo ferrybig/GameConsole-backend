@@ -13,7 +13,7 @@ import io.netty.handler.codec.http.HttpResponse;
  *
  * @author Fernando
  */
-public class ServerLogRoute implements HttpServerRouter.Route {
+public class ServerLogRoute implements Route {
 
 	@Override
 	public boolean acceptsMethod(HttpMethod method) {
