@@ -22,7 +22,7 @@ public class ServerLogRoute implements Route {
 
 	@Override
 	public String getRouteName() {
-		return "service/server/log";
+		return "server/log";
 	}
 
 	@Override
