@@ -18,7 +18,7 @@ import org.json.JSONObject;
  *
  * @author Fernando
  */
-public class ServerStopRoute implements Route {
+public class ServerStartRoute implements Route {
 
 	@Override
 	public boolean acceptsMethod(HttpMethod method) {
@@ -27,7 +27,7 @@ public class ServerStopRoute implements Route {
 
 	@Override
 	public String getRouteName() {
-		return "server/stop";
+		return "server/start";
 	}
 
 	@Override
