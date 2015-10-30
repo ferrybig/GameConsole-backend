@@ -10,7 +10,14 @@ package gameconsole;
  * @author Fernando
  */
 public interface AuthManager {
+	public AuthToken getToken(String key);
+	
+	public AuthToken getNewToken();
+	
 	public interface AuthToken {
+		
+		public String getKey();
+		
 		public boolean mayStopServer(Server server);
 		
 		public boolean mayStartServer(Server server);
