@@ -42,8 +42,10 @@ public class HttpSnoopServerHandler extends SimpleChannelInboundHandler<Object> 
 
         @Override
         protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat(
+            SimpleDateFormat s = new SimpleDateFormat(
                     "EEE, dd MMM yyyy HH:mm:ss z", Locale.US);
+			s.setTimeZone(TimeZone.getTimeZone("GMT"));
+			return s;
         }
 
     };
@@ -86,9 +88,7 @@ public class HttpSnoopServerHandler extends SimpleChannelInboundHandler<Object> 
                     headers.put("cache-control", "max-age=120000");
                     Calendar calendar = Calendar.getInstance();
                     calendar.add(Calendar.DAY_OF_MONTH, 7);
-                    SimpleDateFormat dateFormat = HTTP_TIME_FORMATTER.get();
-                    dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-                    headers.put("Expires",dateFormat.format(calendar.getTime())); // 1 week in future.
+                    headers.put("Expires",HTTP_TIME_FORMATTER.get().format(calendar.getTime())); // 1 week in future.
                     this.buf = new byte[0];
                 } else {
                     status.set(NOT_FOUND);
