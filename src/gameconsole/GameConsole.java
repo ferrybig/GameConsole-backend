@@ -56,11 +56,21 @@ public class GameConsole {
 
     {
         Server s;
-        servers.put("test", s = new Server(new File("server"), Arrays.asList("java", "-jar", "spigot-1.8.jar"), 1024 * 64));
+		servers.put("test", s = new Server(new File("servers/test"), Arrays.asList("java", "-jar", "spigot-1.8.jar"), 1024 * 64));
         s.settings.put(new Setting("port", Setting.Type.PORT, 1, true), "25565");
-        s.settings.put(new Setting("ip", Setting.Type.IP, 1, true), "192.168.178.89");
+        s.settings.put(new Setting("ip", Setting.Type.IP, 1, true), "::");
         s.settings.put(new Setting("server-name", Setting.Type.NORMAL_STRING, 1, false), "Unknown server");
-        s.settings.put(new Setting("moth", Setting.Type.NORMAL_STRING, 1, true), "Minecraft-server");
+        s.settings.put(new Setting("motd", Setting.Type.NORMAL_STRING, 1, false), "Minecraft-server");
+        servers.put("spigot", s = new Server(new File("servers/spigot"), Arrays.asList("java", "-jar", "spigot-1.8.jar"), 1024 * 64));
+        s.settings.put(new Setting("port", Setting.Type.PORT, 1, true), "25565");
+        s.settings.put(new Setting("ip", Setting.Type.IP, 1, true), "::");
+        s.settings.put(new Setting("server-name", Setting.Type.NORMAL_STRING, 1, false), "Unknown server");
+        s.settings.put(new Setting("motd", Setting.Type.NORMAL_STRING, 1, false), "Minecraft-server");
+		servers.put("vanilla", s = new Server(new File("servers/vanilla"), Arrays.asList("java", "-jar", "spigot-1.8.jar"), 1024 * 64));
+        s.settings.put(new Setting("port", Setting.Type.PORT, 1, true), "25565");
+        s.settings.put(new Setting("ip", Setting.Type.IP, 1, true), "::");
+        s.settings.put(new Setting("server-name", Setting.Type.NORMAL_STRING, 1, false), "Unknown server");
+        s.settings.put(new Setting("motd", Setting.Type.NORMAL_STRING, 1, false), "Minecraft-server");
     }
 
     public void handleRequest(
