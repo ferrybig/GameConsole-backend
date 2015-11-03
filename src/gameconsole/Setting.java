@@ -15,9 +15,9 @@ public class Setting {
     private final String name;
     private final Type type;
     private final int length;
-    private final boolean readonly;
+    private final FieldType readonly;
 
-    public Setting(String name, Type type, int length, boolean readonly) {
+    public Setting(String name, Type type, int length, FieldType readonly) {
         this.name = name;
         this.type = type;
         this.length = length;
@@ -80,6 +80,14 @@ public class Setting {
         }
         return true;
     }
+
+	public static enum FieldType {
+
+		READ_ONLY,
+		SYSTEM,
+		ADMIN,
+		OPEN
+	}
     
     
     
