@@ -15,13 +15,13 @@ public class Setting {
     private final String name;
     private final Type type;
     private final int length;
-    private final FieldType readonly;
+    private final FieldType fieldType;
 
-    public Setting(String name, Type type, int length, FieldType readonly) {
+    public Setting(String name, Type type, int length, FieldType fieldType) {
         this.name = name;
         this.type = type;
         this.length = length;
-        this.readonly = readonly;
+        this.fieldType = fieldType;
     }
 
     /**
@@ -45,11 +45,9 @@ public class Setting {
         return type;
     }
 
-    public boolean isReadonly() {
-        return readonly;
-    }
-
-    
+	public FieldType getFieldType() {
+		return fieldType;
+	}
     
     @Override
     public int hashCode() {

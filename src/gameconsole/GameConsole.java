@@ -193,7 +193,7 @@ public class GameConsole {
                             for(Map.Entry<Setting, String> se : s.settings.entrySet()) {
                                 JSONObject obj1 = new JSONObject();
                                 obj1.put("name", se.getKey().getName());
-                                obj1.put("readonly", se.getKey().isReadonly());
+                                obj1.put("fieldtype", se.getKey().getFieldType());
                                 obj1.put("type", se.getKey().getType());
                                 obj1.put("description", se.getKey().getName());
                                 arr.put(obj1);
