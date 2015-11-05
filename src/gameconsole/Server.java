@@ -44,6 +44,7 @@ public class Server {
         this.arguments = arguments;
         this.buffer = new byte[bufferSize];
 		System.arraycopy(DEFAULT_BYTES, 0, buffer, 0, DEFAULT_BYTES.length);
+		this.writeIndex = DEFAULT_BYTES.length;
 //        this.writeMask = i - 1;
 //        this.writeShift = j;
     }
