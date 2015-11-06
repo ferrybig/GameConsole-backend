@@ -6,6 +6,7 @@
 package gameconsole;
 
 import gameconsole.AuthManager.AuthToken;
+import java.util.Collection;
 
 /**
  *
@@ -13,4 +14,6 @@ import gameconsole.AuthManager.AuthToken;
  */
 public interface ServerManager {
 	public Server getServer(AuthToken token, String name);
+	
+	public Collection<Server> serverListing(AuthToken token);
 }
