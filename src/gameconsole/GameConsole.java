@@ -122,6 +122,12 @@ public class GameConsole {
             } else {
                 if(username.equals("root") && password.equals("root")) {
                     auth.put("session_token", "token");
+					JSONArray permissions = new JSONArray();
+					permissions.put("servers.admin");
+					permissions.put("servers.view");
+					permissions.put("servers.log");
+					permissions.put("servers.admin");
+					auth.put("permissions", permissions);
                 } else {
                     auth.put("error", "Invalid username or password");
                 }
