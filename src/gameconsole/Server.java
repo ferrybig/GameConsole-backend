@@ -5,6 +5,7 @@
  */
 package gameconsole;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public class Server {
         this.arguments = arguments;
         this.buffer = new byte[bufferSize];
 		System.arraycopy(DEFAULT_BYTES, 0, buffer, 0, DEFAULT_BYTES.length);
-		this.writeIndex = DEFAULT_BYTES.length;
+		this.writeIndex = (int) (this.totalBytes = DEFAULT_BYTES.length);
 //        this.writeMask = i - 1;
 //        this.writeShift = j;
     }
@@ -196,10 +197,11 @@ public class Server {
                 @Override
                 public void run() {
                     byte[] buff = new byte[1024 * 2];
-                    try (InputStream in = process.getInputStream();) {
+                    try (InputStream in = new BufferedInputStream(process.getInputStream())) {
                         int length;
-                        while ((length = in.read(buff)) >= 0) {
-                            writeBytes(buff, 0, length);
+						int offset = 0;
+                        while ((length = in.read(buff, offset, buff.length - offset)) >= 0) {
+							writeBytes(buff, 0, length);
                         }
                     } catch (IOException ex) {
                         Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
