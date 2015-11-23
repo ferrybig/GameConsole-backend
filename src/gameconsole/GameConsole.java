@@ -59,17 +59,20 @@ public class GameConsole {
 
     {
         Server s;
-		servers.put("test", s = new Server(new File("servers/test"), Arrays.asList("java", "-jar", "spigot-1.8.jar"), 1024 * 64));
+		servers.put("test", s = new Server(new File("servers/test"), Arrays.asList("java", "-Xmx1024m", "-Xms1024m", "-server", 
+				"-Djava.awt.headless=true", "-XX:ParallelGCThreads=1", "-jar", "spigot-1.8.jar"), 1024 * 64));
         s.settings.put(new Setting("port", Setting.Type.PORT, 1, SYSTEM), "25565");
         s.settings.put(new Setting("ip", Setting.Type.IP, 1, SYSTEM), "::");
         s.settings.put(new Setting("server-name", Setting.Type.NORMAL_STRING, 1, ADMIN), "Unknown server");
         s.settings.put(new Setting("motd", Setting.Type.NORMAL_STRING, 1, OPEN), "Minecraft-server");
-        servers.put("spigot", s = new Server(new File("servers/spigot"), Arrays.asList("java", "-jar", "spigot-1.8.jar"), 1024 * 64));
+        servers.put("spigot", s = new Server(new File("servers/spigot"), Arrays.asList("java", "-Xmx1024m", "-Xms1024m", "-server", 
+				"-Djava.awt.headless=true", "-XX:ParallelGCThreads=1", "-jar", "spigot-1.8.jar"), 1024 * 64));
         s.settings.put(new Setting("port", Setting.Type.PORT, 1, SYSTEM), "25565");
         s.settings.put(new Setting("ip", Setting.Type.IP, 1, SYSTEM), "::");
         s.settings.put(new Setting("server-name", Setting.Type.NORMAL_STRING, 1, ADMIN), "Unknown server");
         s.settings.put(new Setting("motd", Setting.Type.NORMAL_STRING, 1, OPEN), "Minecraft-server");
-		servers.put("vanilla", s = new Server(new File("servers/vanilla"), Arrays.asList("java", "-jar", "spigot-1.8.jar"), 1024 * 64));
+		servers.put("vanilla", s = new Server(new File("servers/vanilla"), Arrays.asList("java", "-Xmx1024m", "-Xms1024m", "-server", 
+				"-Djava.awt.headless=true", "-XX:ParallelGCThreads=1", "-jar", "spigot-1.8.jar"), 1024 * 64));
         s.settings.put(new Setting("port", Setting.Type.PORT, 1, SYSTEM), "25565");
         s.settings.put(new Setting("ip", Setting.Type.IP, 1, SYSTEM), "::");
         s.settings.put(new Setting("server-name", Setting.Type.NORMAL_STRING, 1, ADMIN), "Unknown server");
