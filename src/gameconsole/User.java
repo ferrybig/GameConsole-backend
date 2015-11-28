@@ -10,5 +10,10 @@ package gameconsole;
  * @author Fernando
  */
 public interface User {
+	public long getId();
+	
+	public boolean isAdmin();
+	
+	public String getFullName();
 	
 }
