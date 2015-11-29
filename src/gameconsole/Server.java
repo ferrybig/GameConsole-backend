@@ -78,49 +78,6 @@ public class Server {
         return this.buffer.length;
     }
 
-//    public long readBytes(byte[] target, int start, int maxLength, long lastIndex, final boolean waitForContent, int maxAttempts) throws InterruptedException {
-//        synchronized (this) {
-//            long totalWritten = 0;
-//            long attempt = 0;
-//            do {
-//                long bytesToRead = totalBytes - lastIndex;
-//                if (bytesToRead < 0) {
-//                    throw new IllegalArgumentException("Cannot read outdated bytes");
-//                } else if (bytesToRead == 0 && totalWritten == 0 && waitForContent) {
-//                    this.wait(5000);
-//                    if (attempt++ > maxAttempts) {
-//                        break;
-//                    }
-//                } else {
-//                    assert bytesToRead > 0;
-//
-//                    if (bytesToRead > buffer.length) {
-//                        throw new IllegalArgumentException("Buffer overflown");
-//                    }
-//
-//                    long startingIndex = this.writeIndex - bytesToRead;
-//                    if (startingIndex < 0) {
-//                        //underflow
-//                        int firstLength = (int) (0 - startingIndex);
-//                        int secondLength = (int) (bytesToRead - firstLength);
-//                        System.arraycopy(buffer, buffer.length - firstLength, target, start, Math.min(firstLength, maxLength));
-//                        if (firstLength < maxLength) {
-//                            System.arraycopy(buffer, 0, target, start + firstLength, Math.min(secondLength, maxLength - firstLength));
-//                        }
-//                        return lastIndex + Math.min(firstLength + secondLength, bytesToRead);
-//                    } else {
-//                        System.arraycopy(buffer, (int) startingIndex, target, start, (int) Math.min(maxLength, bytesToRead));
-//                        return lastIndex + Math.min(maxLength, bytesToRead) + totalWritten;
-//                    }
-//                }
-//            } while (waitForContent == true);
-//            return lastIndex + totalWritten;
-//        }
-//    }
-//
-//    public long readBytes(byte[] buff, int start, int length) throws InterruptedException {
-//        return this.readBytes(buff, start, length, totalBytes - length, false, 1);
-//    }
     public synchronized int readBytesBlocking(byte[] target, int targetStart, int targetLength, long readIndex, int maxAttempts) throws InterruptedException {
         int r = readBytes0(target, targetStart, targetLength, readIndex);
         int attempt = 0;
