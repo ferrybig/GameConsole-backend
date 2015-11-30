@@ -16,4 +16,9 @@ public interface ServerManager {
 	public Server getServer(AuthToken token, String name);
 	
 	public Collection<Server> serverListing(AuthToken token);
+
+	public Collection<Server> getAllServers();
+
+	public boolean deleteServer(AuthToken token, String name);
+
 }
