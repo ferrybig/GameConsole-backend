@@ -14,15 +14,21 @@ import java.util.Objects;
 public class Setting {
     private final String name;
     private final Type type;
+	private final String description;
     private final int length;
     private final FieldType fieldType;
 
     public Setting(String name, Type type, int length, FieldType fieldType) {
-        this.name = name;
-        this.type = type;
-        this.length = length;
-        this.fieldType = fieldType;
+        this(name, type, "", length, fieldType);
     }
+
+	public Setting(String name, Type type, String description, int length, FieldType fieldType) {
+		this.name = name;
+		this.type = type;
+		this.description = description;
+		this.length = length;
+		this.fieldType = fieldType;
+	}
 
     /**
      * @return the length
