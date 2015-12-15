@@ -53,7 +53,7 @@ public class Server {
     private void writeBytes(byte[] source, int start, int end) {
         synchronized (this) {
             int length = end - start;
-            if (this.writeIndex + length > buffer.length) {
+            if (this.writeIndex + length >= buffer.length) {
                 // overflow
                 int overflow = this.writeIndex + length - buffer.length;
                 if (length != overflow) {
