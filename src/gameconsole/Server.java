@@ -51,8 +51,15 @@ public class Server {
     }
 
     private void writeBytes(byte[] source, int start, int end) {
+		if(end <= start) {
+			throw new IllegalArgumentException("end <= start");
+		}
+		int length = end - start;
+		if(length > buffer.length) {
+			writeBytes(source, start + buffer.length, end);
+			return;
+		}
         synchronized (this) {
-            int length = end - start;
             if (this.writeIndex + length >= buffer.length) {
                 // overflow
                 int overflow = this.writeIndex + length - buffer.length;
