@@ -228,7 +228,7 @@ public class Server {
         out.flush();
     }
 
-    public boolean isRunning() {
+    public synchronized boolean isRunning() {
         return process != null && process.isAlive();
     }
 }
