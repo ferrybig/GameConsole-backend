@@ -284,6 +284,7 @@ public class GameConsole {
                             JSONObject obj = new JSONObject();
                             obj.put("state", s.isRunning() ? "started" : "stopped");
                             obj.put("server-id", server);
+							obj.put("server-name", "Unknown server");
                             obj.put("readIndex", s.getCurrentWriteIndex());
                             obj.put("bufSize", s.getBufferSize());
                             b.append(obj.toString());
